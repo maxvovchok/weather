@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import HomeView from "../pages/HomeView.vue";
 
 const routes = [
   {
@@ -10,8 +10,7 @@ const routes = [
   {
     path: "/selected",
     name: "selected",
-    component: () =>
-      import( "../views/SelectedView.vue"),
+    component: () => import("../pages/SelectedView.vue"),
   },
 ];
 
