@@ -8,7 +8,6 @@
     </header>
     <hr class="header-hr" />
     <router-view />
-    <section>graphic</section>
   </div>
 </template>
 
@@ -18,7 +17,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -26,16 +25,12 @@ export default {
 }
 
 .header {
-  padding: 10px 0px 10px 0px;
+  padding: 10px 30px 10px 30px;
 }
 
 .header-nav {
   display: flex;
   gap: 40px;
-}
-
-.header-hr {
-  margin-bottom: 20px;
 }
 
 .nav-menu-link {
@@ -48,9 +43,7 @@ export default {
   color: rgb(79, 79, 255);
 }
 
-.header-hr {
-}
-
-section {
+li {
+  list-style: none;
 }
 </style>

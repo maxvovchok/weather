@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="autocomplete-input">
     <MyInput v-model="query" :placeholder="'Введіть місто'" />
     <ul class="city-list" v-if="suggestions.length && query.length > 2">
       <li
@@ -54,13 +54,17 @@ export default {
       this.query = suggestion.fullName;
       this.suggestions = [];
       this.ignoreWatch = true;
-      fetchCitySuggestions(this.query);
+
+      this.$store.commit("setCitySuggestions", suggestion.city);
     },
   },
 };
 </script>
 
 <style scoped>
+.autocomplete-input {
+  margin-bottom: 20px;
+}
 .city-list {
   list-style: none;
   padding: 0;

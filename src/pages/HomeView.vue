@@ -1,19 +1,26 @@
 <template>
   <div class="home">
-    <AutocompleteInput></AutocompleteInput>
+    <AutocompleteInput />
+    <WeatherCard
+      v-if="$store.state.citySuggestions"
+      :weatherData="$store.state.citySuggestions"
+    />
   </div>
 </template>
 
 <script>
-import { MyInput } from "@/UI/index.js";
-import { AutocompleteInput } from "@/components/index.js";
+import { AutocompleteInput, WeatherCard } from "@/components/index.js";
 
 export default {
   components: {
-    MyInput,
     AutocompleteInput,
+    WeatherCard,
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.home {
+  padding: 40px;
+}
+</style>
