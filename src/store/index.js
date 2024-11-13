@@ -2,23 +2,42 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    citySuggestions: null,
-    hourlyRate: null,
-  },
-  getters: {
-    citySuggestions(state) {
-      return state.citySuggestions;
-    },
+    cities: [
+      {
+        id: 1,
+        citySuggestions: null,
+        hourlyRate: null,
+      },
+    ],
+    isFirstCitySelected: false,
   },
   mutations: {
-    setCitySuggestions(state, suggestions) {
-      state.citySuggestions = suggestions;
+    setCitySuggestions(state, { index, city }) {
+      if (state.cities[index]) {
+        state.cities[index].citySuggestions = city;
+      }
     },
-
-    setGetHourlyRate(state, suggestions) {
-      state.hourlyRate = suggestions;
+    setGetHourlyRate(state, { index, hourlyRate }) {
+      if (state.cities[index]) {
+        state.cities[index].hourlyRate = hourlyRate;
+        state.isFirstCitySelected = true;
+      }
+    },
+    incrementBlocks(state) {
+      if (state.cities.length < 5) {
+        state.cities.push({
+          id: state.cities.length + 1,
+          citySuggestions: null,
+          hourlyRate: null,
+        });
+        state.isFirstCitySelected = false;
+      }
+    },
+    removeBlock(state, index) {
+      if (state.cities.length > 1) {
+        state.cities.splice(index, 1);
+      }
+      state.isFirstCitySelected = true;
     },
   },
-  actions: {},
-  modules: {},
 });

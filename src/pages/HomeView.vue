@@ -1,14 +1,25 @@
 <template>
   <div class="home">
-    <AutocompleteInput />
-    <WeatherCard
-      v-if="$store.state.citySuggestions"
-      :weatherData="$store.state.citySuggestions"
+    <div v-for="(city, index) in $store.state.cities" :key="city.id">
+      <AutocompleteInput :index="index" />
+      <WeatherCard
+        v-if="city.citySuggestions"
+        :weatherData="city.citySuggestions"
+      />
+      <TemperatureChart v-if="city.hourlyRate" :hourlyRate="city.hourlyRate" />
+
+      <RemoveBlock
+        v-if="$store.state.cities.length > 1"
+        @remove="handleRemoveBlock(index)"
+      />
+    </div>
+
+    <AddBlocks
+      v-if="
+        $store.state.isFirstCitySelected &&
+        $store.state.cities[0].citySuggestions !== null
+      "
     />
-    <TemperatureChart
-      v-if="$store.state.hourlyRate"
-      :hourlyRate="$store.state.hourlyRate"
-    ></TemperatureChart>
   </div>
 </template>
 
@@ -17,6 +28,8 @@ import {
   AutocompleteInput,
   WeatherCard,
   TemperatureChart,
+  AddBlocks,
+  RemoveBlock,
 } from "@/components/index.js";
 
 export default {
@@ -24,6 +37,18 @@ export default {
     AutocompleteInput,
     WeatherCard,
     TemperatureChart,
+    AddBlocks,
+    RemoveBlock,
+  },
+
+  methods: {
+    handleRemoveBlock(index) {
+      this.$store.commit("removeBlock", index);
+    },
+    handleAddBlock() {
+      this.$store.commit("incrementBlocks");
+      this.$store.commit("setFirstCitySelected", false);
+    },
   },
 };
 </script>

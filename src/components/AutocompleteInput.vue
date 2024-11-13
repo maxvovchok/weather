@@ -55,10 +55,14 @@ export default {
       this.suggestions = [];
       this.ignoreWatch = true;
 
-      this.$store.commit("setCitySuggestions", suggestion.city);
+      const index = this.$store.state.cities.length - 1;
+      this.$store.commit("setCitySuggestions", {
+        index,
+        city: suggestion.city,
+      });
 
       getHourlyRate(this.query).then((res) =>
-        this.$store.commit("setGetHourlyRate", res)
+        this.$store.commit("setGetHourlyRate", { index, hourlyRate: res })
       );
     },
   },

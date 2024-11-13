@@ -1,5 +1,7 @@
 <template>
-  <canvas ref="myChart"></canvas>
+  <div class="temperature-chart">
+    <canvas ref="myChart"></canvas>
+  </div>
 </template>
 
 <script>
@@ -83,9 +85,11 @@ export default {
       this.updateChart(this.listtime);
     },
   },
-
-  beforeUnmount() {
-    this.destroyChart();
-  },
 };
 </script>
+
+<style>
+.temperature-chart {
+  margin-bottom: 20px;
+}
+</style>
