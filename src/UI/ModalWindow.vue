@@ -34,5 +34,7 @@ export default {
   border-radius: 12px;
   min-width: 300px;
   min-height: 100px;
+  padding: 20px;
+  text-align: center;
 }
 </style>

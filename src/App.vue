@@ -18,6 +18,21 @@ export default {
 </script>
 
 <style>
+body {
+  font-family: "Roboto", sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+li {
+  list-style: none;
+}
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -41,9 +56,5 @@ export default {
 
 .nav-menu-link:hover {
   color: rgb(79, 79, 255);
-}
-
-li {
-  list-style: none;
 }
 </style>

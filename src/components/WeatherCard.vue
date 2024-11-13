@@ -87,6 +87,7 @@ export default {
   margin-bottom: 15px;
   color: #333;
   text-align: center;
+  margin-bottom: 50px;
 }
 
 .weather-info {
@@ -110,6 +111,8 @@ export default {
 .temp-main {
   font-size: 36px;
   color: #ff6b6b;
+  margin-bottom: 40px;
+  font-weight: bold;
 }
 
 .weather-details-item {
@@ -118,9 +121,5 @@ export default {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-}
-
-strong {
-  font-weight: bold;
 }
 </style>

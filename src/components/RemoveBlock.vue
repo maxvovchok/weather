@@ -1,13 +1,39 @@
 <template>
   <div class="remove-btn">
-    <MyButton :handleClick="removeBlock">Видалити блок</MyButton>
-    <!-- <ModalWindow
-      :show="showModalWindow"
-      @close="showModalWindow = false"
-      @confirm="removeBlock"
+    <MyButton
+      :handleClick="confirmRemove"
+      :styles="{ backgroundColor: 'rgb(255, 81, 81)', color: 'white' }"
+      :hoverStyles="{ backgroundColor: 'rgb(255, 0, 0)' }"
     >
-      Точно видалити?
-    </ModalWindow> -->
+      Видалити блок</MyButton
+    >
+    <ModalWindow :show="showModalWindow">
+      <h3 class="modal-title">Видалити?</h3>
+      <p class="modal-text">
+        Після того як ви натиснете "Видалити", блок з цим містом буде видалено
+      </p>
+
+      <ul class="modal-btn-list">
+        <li class="modal-btn-item">
+          <MyButton
+            :handleClick="closeModal"
+            :styles="{ backgroundColor: 'aliceblue' }"
+            :hoverStyles="{ backgroundColor: 'rgb(139, 139, 250)' }"
+          >
+            Відмінити</MyButton
+          >
+        </li>
+        <li class="modal-btn-item">
+          <MyButton
+            :handleClick="removeBlock"
+            :styles="{ backgroundColor: 'rgb(255, 81, 81)', color: 'white' }"
+            :hoverStyles="{ backgroundColor: 'rgb(255, 0, 0)' }"
+          >
+            Видалити</MyButton
+          >
+        </li>
+      </ul>
+    </ModalWindow>
   </div>
 </template>
 
@@ -32,11 +58,28 @@ export default {
       this.showModalWindow = false;
       this.$emit("remove");
     },
+    closeModal() {
+      this.showModalWindow = false;
+    },
   },
 };
 </script>
 
 <style scoped>
+.modal-title {
+  margin-bottom: 35px;
+}
+
+.modal-text {
+  margin-bottom: 20px;
+}
+
+.modal-btn-list {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
 .remove-btn {
   display: flex;
   justify-content: flex-end;

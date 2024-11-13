@@ -1,8 +1,21 @@
 <template>
   <div class="add-btn">
-    <MyButton :handleClick="addBlock">Додати блок</MyButton>
-    <ModalWindow :show="showModalWindow" @close="showModalWindow = false">
-      Максимум 5 блоків.
+    <MyButton
+      :handleClick="addBlock"
+      :styles="{ backgroundColor: 'aliceblue' }"
+      :hoverStyles="{ backgroundColor: 'rgb(139, 139, 250)' }"
+      >Додати блок</MyButton
+    >
+    <ModalWindow :show="showModalWindow">
+      <h3>Максимум 5 блоків</h3>
+      <p>Щоб додавти ще один блок спочатку видаліть попередні блоки</p>
+
+      <MyButton
+        :handleClick="closeModalWindow"
+        :styles="{ backgroundColor: 'aliceblue' }"
+        :hoverStyles="{ backgroundColor: 'rgb(139, 139, 250)' }"
+        >Добре</MyButton
+      >
     </ModalWindow>
   </div>
 </template>
@@ -27,6 +40,10 @@ export default {
       } else {
         this.$store.commit("incrementBlocks");
       }
+    },
+
+    closeModalWindow() {
+      this.showModalWindow = false;
     },
   },
 };
