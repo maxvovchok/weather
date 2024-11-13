@@ -2,6 +2,16 @@
   <div class="home">
     <div v-for="(city, index) in $store.state.cities" :key="city.id">
       <AutocompleteInput :index="index" />
+      <h1
+        v-if="$store.state.cities[0].citySuggestions === null"
+        class="home-title"
+      >
+        Введіть місто та дізнайтесь погоду
+      </h1>
+      <SelectedBlock
+        :cities="city"
+        v-if="$store.state.cities[index].citySuggestions !== null"
+      ></SelectedBlock>
       <WeatherCard
         v-if="city.citySuggestions"
         :weatherData="city.citySuggestions"
@@ -30,6 +40,7 @@ import {
   TemperatureChart,
   AddBlocks,
   RemoveBlock,
+  SelectedBlock,
 } from "@/components/index.js";
 
 export default {
@@ -39,6 +50,7 @@ export default {
     TemperatureChart,
     AddBlocks,
     RemoveBlock,
+    SelectedBlock,
   },
 
   methods: {
@@ -56,5 +68,10 @@ export default {
 <style scoped>
 .home {
   padding: 40px;
+}
+
+.home-title {
+  text-align: center;
+  margin-top: 180px;
 }
 </style>

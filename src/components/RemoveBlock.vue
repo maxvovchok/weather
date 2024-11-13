@@ -65,7 +65,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .modal-title {
   margin-bottom: 35px;
 }
