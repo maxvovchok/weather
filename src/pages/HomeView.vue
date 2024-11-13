@@ -5,16 +5,25 @@
       v-if="$store.state.citySuggestions"
       :weatherData="$store.state.citySuggestions"
     />
+    <TemperatureChart
+      v-if="$store.state.hourlyRate"
+      :hourlyRate="$store.state.hourlyRate"
+    ></TemperatureChart>
   </div>
 </template>
 
 <script>
-import { AutocompleteInput, WeatherCard } from "@/components/index.js";
+import {
+  AutocompleteInput,
+  WeatherCard,
+  TemperatureChart,
+} from "@/components/index.js";
 
 export default {
   components: {
     AutocompleteInput,
     WeatherCard,
+    TemperatureChart,
   },
 };
 </script>

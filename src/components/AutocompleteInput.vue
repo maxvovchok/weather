@@ -16,7 +16,7 @@
 
 <script>
 import MyInput from "@/UI/MyInput.vue";
-import { fetchCitySuggestions } from "@/service/fetchCitySuggestions";
+import { getCitySuggestions, getHourlyRate } from "@/service/index.js";
 
 export default {
   components: {
@@ -45,7 +45,7 @@ export default {
   methods: {
     async getCitySuggestions(query) {
       try {
-        this.suggestions = await fetchCitySuggestions(query);
+        this.suggestions = await getCitySuggestions(query);
       } catch (error) {
         console.error("Failed to fetch city suggestions", error);
       }
@@ -56,6 +56,10 @@ export default {
       this.ignoreWatch = true;
 
       this.$store.commit("setCitySuggestions", suggestion.city);
+
+      getHourlyRate(this.query).then((res) =>
+        this.$store.commit("setGetHourlyRate", res)
+      );
     },
   },
 };

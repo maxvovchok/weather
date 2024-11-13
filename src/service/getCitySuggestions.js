@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_KEY, BASE_URL } from "./api";
 
-export async function fetchCitySuggestions(query) {
+export async function getCitySuggestions(query) {
   try {
     const res = await axios.get(`${BASE_URL}/find`, {
       params: {
@@ -10,11 +10,6 @@ export async function fetchCitySuggestions(query) {
         appid: API_KEY,
       },
     });
-
-    // console.log(res.data.list);
-
-    //   return res.data
-
     return res.data.list.map((city) => ({
       name: city.name,
       country: city.sys.country,

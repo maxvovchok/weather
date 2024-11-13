@@ -120,10 +120,6 @@ export default {
   flex-wrap: wrap;
 }
 
-.weather-details p {
-  margin: 8px 0;
-}
-
 strong {
   font-weight: bold;
 }
