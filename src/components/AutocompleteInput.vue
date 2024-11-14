@@ -1,6 +1,6 @@
 <template>
   <div class="autocomplete-input">
-    <MyInput v-model="query" :placeholder="'Введіть місто'" />
+    <MyInput v-model="query" :placeholder="$t('placeholderInput')" />
     <ul class="city-list" v-if="suggestions.length && query.length > 2">
       <li
         class="city-item"

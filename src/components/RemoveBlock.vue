@@ -5,12 +5,12 @@
       :styles="{ backgroundColor: 'rgb(255, 81, 81)', color: 'white' }"
       :hoverStyles="{ backgroundColor: 'rgb(255, 0, 0)' }"
     >
-      Видалити блок</MyButton
+      {{ $t("removeBlock") }}</MyButton
     >
     <ModalWindow :show="showModalWindow">
-      <h3 class="modal-title">Видалити?</h3>
+      <h3 class="modal-title">{{ $t("remove") }}?</h3>
       <p class="modal-text">
-        Після того як ви натиснете "Видалити", блок з цим містом буде видалено
+        {{ $t("warning") }}
       </p>
 
       <ul class="modal-btn-list">
@@ -20,7 +20,7 @@
             :styles="{ backgroundColor: 'aliceblue' }"
             :hoverStyles="{ backgroundColor: 'rgb(139, 139, 250)' }"
           >
-            Відмінити</MyButton
+            {{ $t("cancel") }}</MyButton
           >
         </li>
         <li class="modal-btn-item">
@@ -29,7 +29,7 @@
             :styles="{ backgroundColor: 'rgb(255, 81, 81)', color: 'white' }"
             :hoverStyles="{ backgroundColor: 'rgb(255, 0, 0)' }"
           >
-            Видалити</MyButton
+            {{ $t("remove") }}</MyButton
           >
         </li>
       </ul>

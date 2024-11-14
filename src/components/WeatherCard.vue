@@ -5,28 +5,46 @@
         {{ weatherData.name }}, {{ weatherData.sys.country }}
       </h2>
       <div class="weather-info">
-        <p><strong>День:</strong> {{ day }}</p>
-        <p><strong>Дата:</strong> {{ formattedDate }}</p>
+        <p>
+          <strong>{{ $t("day") }}:</strong> {{ day }}
+        </p>
+        <p>
+          <strong>{{ $t("date") }}:</strong> {{ formattedDate }}
+        </p>
       </div>
       <div class="temperature-section">
         <p class="temp-main">
           <strong>{{ temperatureC }}°C</strong>
         </p>
         <p>
-          <small>Відчувається як: {{ feelsLikeC }}°C</small>
+          <small>{{ $t("feelsLike") }}: {{ feelsLikeC }}°C</small>
         </p>
       </div>
     </li>
     <li class="weather-details-item">
-      <p><strong>Мін. температура:</strong> {{ tempMinC }}°C</p>
-      <p><strong>Макс. температура:</strong> {{ tempMaxC }}°C</p>
-      <p><strong>Тиск:</strong> {{ weatherData.main.pressure }} гПа</p>
-      <p><strong>Вологість:</strong> {{ weatherData.main.humidity }}%</p>
-      <p><strong>Хмарність:</strong> {{ weatherData.clouds.all }}%</p>
-      <p><strong>Опис:</strong> {{ weatherData.weather[0].description }}</p>
       <p>
-        <strong>Вітер:</strong> {{ weatherData.wind.speed }} м/с,
-        {{ weatherData.wind.deg }}°
+        <strong>{{ $t("tempMin") }}:</strong> {{ tempMinC }}°C
+      </p>
+      <p>
+        <strong>{{ $t("tempMax") }}:</strong> {{ tempMaxC }}°C
+      </p>
+      <p>
+        <strong>{{ $t("pressure") }}:</strong>
+        {{ weatherData.main.pressure }} {{ $t("hpa") }}
+      </p>
+      <p>
+        <strong>{{ $t("humidity") }}:</strong> {{ weatherData.main.humidity }}%
+      </p>
+      <p>
+        <strong>{{ $t("cloudiness") }}:</strong> {{ weatherData.clouds.all }}%
+      </p>
+      <p>
+        <strong>{{ $t("description") }}:</strong>
+        {{ translatedDescription }}
+      </p>
+      <p>
+        <strong>{{ $t("wind") }}:</strong> {{ weatherData.wind.speed }}
+        {{ $t("ms") }}, {{ weatherData.wind.deg }}°
       </p>
     </li>
   </ul>
@@ -60,7 +78,14 @@ export default {
     },
     day() {
       const date = new Date(this.weatherData.dt * 1000);
-      return date.toLocaleDateString("uk-UA", { weekday: "long" });
+      const weekday = date
+        .toLocaleDateString("en-US", { weekday: "long" })
+        .toLowerCase();
+      return this.$t(weekday);
+    },
+    translatedDescription() {
+      const description = this.weatherData.weather[0].description;
+      return this.$t(`weatherDescriptions.${description}`);
     },
   },
 };

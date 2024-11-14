@@ -1,13 +1,15 @@
 <template>
-  <MyButton
-    :styles="{ backgroundColor: 'aliceblue' }"
-    :hoverStyles="{ backgroundColor: 'rgb(139, 139, 250)' }"
-    :handleClick="addLocalStorage"
-    >Обране</MyButton
-  >
+  <div class="selected-btn">
+    <MyButton
+      :styles="{ backgroundColor: 'aliceblue' }"
+      :hoverStyles="{ backgroundColor: 'rgb(139, 139, 250)' }"
+      :handleClick="addLocalStorage"
+      >{{ $t("selected") }}</MyButton
+    >
+  </div>
 
   <ModalWindow :show="showWarningModal" @close="showWarningModal = false">
-    <h2 class="modal-title">Місто вже додане до обраних міст</h2>
+    <h2 class="modal-title">{{ $t("addWarningCity") }}</h2>
     <MyButton
       :styles="{ backgroundColor: 'aliceblue' }"
       :hoverStyles="{ backgroundColor: 'rgb(139, 139, 250)' }"
@@ -16,12 +18,12 @@
           showWarningModal = false;
         }
       "
-      >Закрити</MyButton
+      >{{ $t("close") }}</MyButton
     >
   </ModalWindow>
 
   <ModalWindow :show="showSuccessModal" @close="showSuccessModal = false">
-    <h2 class="modal-title">Місто успішно додано до обраних</h2>
+    <h2 class="modal-title">{{ $t("addCity") }}</h2>
     <MyButton
       :styles="{ backgroundColor: 'aliceblue' }"
       :hoverStyles="{ backgroundColor: 'rgb(139, 139, 250)' }"
@@ -30,7 +32,7 @@
           showSuccessModal = false;
         }
       "
-      >Закрити</MyButton
+      >{{ $t("close") }}</MyButton
     >
   </ModalWindow>
 </template>
@@ -88,4 +90,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.selected-btn {
+  padding-right: 40px;
+}
+</style>

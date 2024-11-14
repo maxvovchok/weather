@@ -36,7 +36,7 @@ export default {
           labels: this.labels,
           datasets: [
             {
-              label: "Температура (°C)",
+              label: `${this.$t("temperature")} (°C)`,
               data: this.listtime,
               backgroundColor: "rgba(75, 192, 192, 0.2)",
               borderColor: "rgba(75, 192, 192, 1)",

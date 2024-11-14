@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <h1 v-if="cities.length === 0" class="about-title">
-      Ви не обрали, не одне місто
+      {{ $t("aboutTitle") }}
     </h1>
     <div v-for="(city, index) in cities" :key="city.id">
       <WeatherCard

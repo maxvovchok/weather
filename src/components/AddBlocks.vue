@@ -4,17 +4,19 @@
       :handleClick="addBlock"
       :styles="{ backgroundColor: 'aliceblue' }"
       :hoverStyles="{ backgroundColor: 'rgb(139, 139, 250)' }"
-      >Додати блок</MyButton
+      >{{ $t("addBlock") }}</MyButton
     >
     <ModalWindow :show="showModalWindow">
-      <h3>Максимум 5 блоків</h3>
-      <p>Щоб додавти ще один блок спочатку видаліть попередні блоки</p>
+      <h3 class="modal-title">{{ $t("maxBlock") }}</h3>
+      <p class="modal-text">
+        {{ $t("addInfo") }}
+      </p>
 
       <MyButton
         :handleClick="closeModalWindow"
         :styles="{ backgroundColor: 'aliceblue' }"
         :hoverStyles="{ backgroundColor: 'rgb(139, 139, 250)' }"
-        >Добре</MyButton
+        >{{ $t("ok") }}</MyButton
       >
     </ModalWindow>
   </div>

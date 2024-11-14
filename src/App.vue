@@ -2,9 +2,12 @@
   <div class="container">
     <header class="header">
       <nav class="header-nav">
-        <router-link class="nav-menu-link" to="/">Home</router-link>
-        <router-link class="nav-menu-link" to="/selected">Selected</router-link>
+        <router-link class="nav-menu-link" to="/">{{ $t("home") }}</router-link>
+        <router-link class="nav-menu-link" to="/selected">{{
+          $t("selected")
+        }}</router-link>
       </nav>
+      <SwitchLanguages></SwitchLanguages>
     </header>
     <hr class="header-hr" />
     <router-view />
@@ -12,8 +15,9 @@
 </template>
 
 <script>
+import { SwitchLanguages } from "@/components/index.js";
 export default {
-  components: {},
+  components: { SwitchLanguages },
 };
 </script>
 
@@ -40,7 +44,10 @@ li {
 }
 
 .header {
-  padding: 10px 30px 10px 30px;
+  padding: 5px 30px 5px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header-nav {

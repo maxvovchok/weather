@@ -40,4 +40,18 @@ export default createStore({
       state.isFirstCitySelected = true;
     },
   },
+  actions: {
+    async getDefaultWeather({ commit }) {
+      const location = await getUserLocation(); // Виклик функції для отримання місця
+      if (location) {
+        const weatherData = await getWeatherForLocation(
+          location.lat,
+          location.lon
+        );
+        if (weatherData) {
+          commit("setCitySuggestions", { index: 0, city: weatherData });
+        }
+      }
+    },
+  },
 });
