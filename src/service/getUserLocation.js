@@ -5,11 +5,16 @@ export async function getUserLocation() {
   try {
     const response = await axios.get(
       `https://ipinfo.io?token=${API_KEY_IPINFO}`
-    ); 
-    const { city, loc } = response.data;
-    const [lat, lon] = loc.split(","); 
+    );
 
-    return { city, lat, lon };
+    const data = response.data;
+    const arrCoordinates = data.loc.split(",");
+    const coordinates = {
+      lat: arrCoordinates[0],
+      lon: arrCoordinates[1],
+      city: data.city,
+    };
+    return coordinates;
   } catch (error) {
     console.error("Error fetching user location", error);
     return null;

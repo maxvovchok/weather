@@ -76,7 +76,6 @@ export default {
           const hour = parseInt(time);
           const temp = item.main.temp - 273.15;
           hourlyData[hour] = temp;
-          console.log(" hourlyData[hour]", hourlyData);
         }
       });
 

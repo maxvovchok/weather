@@ -10,6 +10,7 @@ export async function getCitySuggestions(query) {
         appid: API_KEY,
       },
     });
+
     return res.data.list.map((city) => ({
       name: city.name,
       country: city.sys.country,

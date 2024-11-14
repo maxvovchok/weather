@@ -9,16 +9,10 @@
 
       <ul class="btn-list">
         <li>
-          <WeatherToggle
-            v-if="city.citySuggestions !== null"
-            :index="index"
-          ></WeatherToggle>
+          <WeatherToggle v-if="city.citySuggestions" :index="index" />
         </li>
         <li>
-          <SelectedBlock
-            :cities="city"
-            v-if="city.citySuggestions !== null"
-          ></SelectedBlock>
+          <SelectedBlock :cities="city" v-if="city.citySuggestions" />
         </li>
       </ul>
 
@@ -44,7 +38,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import {
   AutocompleteInput,
   WeatherCard,
@@ -54,6 +47,11 @@ import {
   SelectedBlock,
   WeatherToggle,
 } from "@/components/index.js";
+import {
+  getUserLocation,
+  getHourlyRate,
+  getCityCoordinates,
+} from "@/service/index";
 
 export default {
   components: {
@@ -66,18 +64,40 @@ export default {
     WeatherToggle,
   },
 
-  data() {
-    return {
-      userCity: null,
-    };
+  async created() {
+    try {
+      const userLocation = await getUserLocation();
+      if (userLocation) {
+        const { lat, lon, city } = userLocation;
+
+        const suggestions = await getCityCoordinates(lat, lon);
+
+        if (suggestions) {
+          const index = this.$store.state.cities.length - 1;
+
+          this.$store.commit("setCitySuggestions", {
+            index,
+            city: suggestions.city,
+          });
+
+          getHourlyRate(city).then((res) =>
+            this.$store.commit("setGetHourlyRate", { index, hourlyRate: res })
+          );
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
   },
 
-  handleRemoveBlock(index) {
-    this.$store.commit("removeBlock", index);
-  },
-  handleAddBlock() {
-    this.$store.commit("incrementBlocks");
-    this.$store.commit("setFirstCitySelected", false);
+  methods: {
+    handleRemoveBlock(index) {
+      this.$store.commit("removeBlock", index);
+    },
+    handleAddBlock() {
+      this.$store.commit("incrementBlocks");
+      this.$store.commit("setFirstCitySelected", false);
+    },
   },
 };
 </script>
