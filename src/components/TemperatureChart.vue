@@ -26,10 +26,10 @@ export default {
     this.filterTodayData();
     this.createChart();
   },
+
   methods: {
     createChart() {
       const ctx = this.$refs.myChart.getContext("2d");
-
       this.chart = new Chart(ctx, {
         type: "line",
         data: {
@@ -56,17 +56,21 @@ export default {
       });
     },
 
-    updateChart(newData) {
+    refreshChart() {
       if (this.chart) {
-        this.chart.data.datasets[0].data = newData;
-        this.chart.update();
+        this.chart.destroy();
       }
+
+      this.filterTodayData();
+      this.createChart();
     },
 
     filterTodayData() {
       const today = new Date().toISOString().split("T")[0];
-      const hourlyData = Array(24).fill(null);
-      const timeLabels = Array.from({ length: 24 }, (_, i) => `${i}:00`);
+
+      const timeLabels = Array.from({ length: 8 }, (_, i) => `${i * 3}:00`);
+
+      const hourlyData = Array(8).fill(null);
 
       this.hourlyRate.list.forEach((item) => {
         const dateTime = item.dt_txt.split(" ")[0];
@@ -74,14 +78,21 @@ export default {
 
         if (dateTime === today) {
           const hour = parseInt(time);
-          const temp = item.main.temp - 273.15;
-          hourlyData[hour] = temp;
+
+          if (hour % 3 === 0 && hour <= 21) {
+            const temp = item.main.temp - 273.15;
+            hourlyData[hour / 3] = temp;
+          }
         }
       });
 
       this.listtime = hourlyData;
       this.labels = timeLabels;
-      this.updateChart(this.listtime);
+    },
+  },
+  watch: {
+    hourlyRate() {
+      this.refreshChart();
     },
   },
 };

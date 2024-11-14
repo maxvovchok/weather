@@ -83,7 +83,7 @@ export default {
         .toLowerCase();
       return this.$t(weekday);
     },
-    translatedDescription() {
+     translatedDescription() {
       const description = this.weatherData.weather[0].description;
       return this.$t(`weatherDescriptions.${description}`);
     },
