@@ -7,6 +7,8 @@ export default createStore({
         id: 1,
         citySuggestions: null,
         hourlyRate: null,
+        weeklyWeather: null,
+        regime: "day",
       },
     ],
     isFirstCitySelected: false,
@@ -21,6 +23,16 @@ export default createStore({
       if (state.cities[index]) {
         state.cities[index].hourlyRate = hourlyRate;
         state.isFirstCitySelected = true;
+      }
+    },
+    seWeeklyWeather(state, { index, weeklyWeather }) {
+      if (state.cities[index]) {
+        state.cities[index].weeklyWeather = weeklyWeather;
+      }
+    },
+    setRegime(state, { index, regime }) {
+      if (state.cities[index]) {
+        state.cities[index].regime = regime;
       }
     },
     incrementBlocks(state) {

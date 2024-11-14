@@ -9,18 +9,34 @@
 
       <ul class="btn-list">
         <li>
-          <WeatherToggle v-if="city.citySuggestions" :index="index" />
+          <WeatherToggle
+            v-if="city.citySuggestions"
+            :weather="city.citySuggestions"
+            :index="index"
+          />
         </li>
         <li>
-          <SelectedBlock :cities="city" v-if="city.citySuggestions" />
+          <SelectedBlock
+            :cities="city"
+            :weeklyWeather="city.weeklyWeather"
+            v-if="city.citySuggestions"
+          />
         </li>
       </ul>
 
       <WeatherCard
         v-if="city.citySuggestions"
-        :weatherData="city.citySuggestions"
+        :weatherDataDay="city.citySuggestions"
+        :weatherDataWeek="city.weeklyWeather"
+        :index="index"
       />
-      <TemperatureChart v-if="city.hourlyRate" :hourlyRate="city.hourlyRate" />
+
+      <TemperatureChart
+        v-if="city.hourlyRate"
+        :hourlyRate="city.hourlyRate"
+        :weeklyRate="city.weeklyWeather"
+        :index="index"
+      />
 
       <RemoveBlock
         v-if="$store.state.cities.length > 1"
@@ -73,7 +89,7 @@ export default {
         const suggestions = await getCityCoordinates(lat, lon);
 
         if (suggestions) {
-          const index = this.$store.state.cities.length - 1;
+          const index = 0;
 
           this.$store.commit("setCitySuggestions", {
             index,

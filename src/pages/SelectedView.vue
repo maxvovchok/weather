@@ -4,11 +4,23 @@
       {{ $t("aboutTitle") }}
     </h1>
     <div v-for="(city, index) in cities" :key="city.id">
+      <WeatherToggle
+        v-if="city.citySuggestions"
+        :weather="city.citySuggestions"
+        :index="index"
+      />
       <WeatherCard
         v-if="city.citySuggestions"
-        :weatherData="city.citySuggestions"
+        :weatherDataDay="city.citySuggestions"
+        :weatherDataWeek="getWeeklyWeather(index)"
+        :index="index"
       />
-      <TemperatureChart v-if="city.hourlyRate" :hourlyRate="city.hourlyRate" />
+      <!-- <TemperatureChart
+        v-if="city.hourlyRate"
+        :hourlyRate="city.hourlyRate"
+        :weeklyRate="getWeeklyWeather(index)"
+        :index="index"
+      /> -->
 
       <RemoveBlock @remove="handleRemoveBlock(index)" />
     </div>
@@ -20,6 +32,7 @@ import {
   WeatherCard,
   TemperatureChart,
   RemoveBlock,
+  WeatherToggle,
 } from "@/components/index.js";
 
 export default {
@@ -27,6 +40,7 @@ export default {
     WeatherCard,
     TemperatureChart,
     RemoveBlock,
+    WeatherToggle,
   },
 
   data() {
@@ -37,6 +51,7 @@ export default {
 
   created() {
     this.loadCities();
+    console.log("qwe", this.$store.state.cities);
   },
 
   methods: {
@@ -50,6 +65,10 @@ export default {
     handleRemoveBlock(index) {
       this.cities.splice(index, 1);
       localStorage.setItem("cities", JSON.stringify(this.cities));
+    },
+
+    getWeeklyWeather(index) {
+      return this.$store.state.cities[index]?.weeklyWeather;
     },
   },
 };

@@ -19,6 +19,12 @@ import MyInput from "@/UI/MyInput.vue";
 import { getCitySuggestions, getHourlyRate } from "@/service/index.js";
 
 export default {
+  props: {
+    index: {
+      type: Number,
+      required: true,
+    },
+  },
   components: {
     MyInput,
   },
@@ -55,15 +61,18 @@ export default {
       this.suggestions = [];
       this.ignoreWatch = true;
 
-      const index = this.$store.state.cities.length - 1;
       this.$store.commit("setCitySuggestions", {
-        index,
+        index: this.index,
         city: suggestion.city,
       });
 
       getHourlyRate(this.query).then((res) =>
-        this.$store.commit("setGetHourlyRate", { index, hourlyRate: res })
+        this.$store.commit("setGetHourlyRate", {
+          index: this.index,
+          hourlyRate: res,
+        })
       );
+      this.$store.commit("setRegime", { index: this.index, regime: "day" });
     },
   },
 };
@@ -71,7 +80,7 @@ export default {
 
 <style scoped>
 .autocomplete-input {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 .city-list {
   list-style: none;

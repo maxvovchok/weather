@@ -1,8 +1,8 @@
 <template>
-  <ul class="weather-card-list">
+  <ul class="weather-card-list" v-if="isDay">
     <li class="weather-main-item">
       <h2 class="weather-card-title">
-        {{ weatherData.name }}, {{ weatherData.sys.country }}
+        {{ weatherDataDay.name }}, {{ weatherDataDay.sys.country }}
       </h2>
       <div class="weather-info">
         <p>
@@ -30,21 +30,42 @@
       </p>
       <p>
         <strong>{{ $t("pressure") }}:</strong>
-        {{ weatherData.main.pressure }} {{ $t("hpa") }}
+        {{ weatherDataDay.main.pressure }} {{ $t("hpa") }}
       </p>
       <p>
-        <strong>{{ $t("humidity") }}:</strong> {{ weatherData.main.humidity }}%
+        <strong>{{ $t("humidity") }}:</strong>
+        {{ weatherDataDay.main.humidity }}%
       </p>
       <p>
-        <strong>{{ $t("cloudiness") }}:</strong> {{ weatherData.clouds.all }}%
+        <strong>{{ $t("cloudiness") }}:</strong>
+        {{ weatherDataDay.clouds.all }}%
       </p>
       <p>
         <strong>{{ $t("description") }}:</strong>
         {{ translatedDescription }}
       </p>
       <p>
-        <strong>{{ $t("wind") }}:</strong> {{ weatherData.wind.speed }}
-        {{ $t("ms") }}, {{ weatherData.wind.deg }}°
+        <strong>{{ $t("wind") }}:</strong> {{ weatherDataDay.wind.speed }}
+        {{ $t("ms") }}, {{ weatherDataDay.wind.deg }}°
+      </p>
+    </li>
+  </ul>
+
+  <ul v-else class="weekly-weather-list">
+    <li
+      v-for="(weather, idx) in weatherDataWeek"
+      :key="idx"
+      class="weekly-weather-item"
+    >
+      <p class="weekly-weather-day-text">{{ getDayOfWeek(weather.dayWeek) }}</p>
+      <p class="weekly-temp">{{ weather.temp.toFixed(1) }}°C</p>
+      <p class="weekly-description">
+        {{
+          $t(`weatherDescriptions.${weather.description}`) !==
+          `weatherDescriptions.${weather.description}`
+            ? $t(`weatherDescriptions.${weather.description}`)
+            : weather.description
+        }}
       </p>
     </li>
   </ul>
@@ -53,39 +74,59 @@
 <script>
 export default {
   props: {
-    weatherData: {
+    weatherDataDay: {
       type: Object,
       required: true,
     },
+    weatherDataWeek: {
+      type: Array,
+      required: true,
+    },
+    index: {
+      type: Number,
+      required: true,
+    },
   },
-
-  computed: {
-    temperatureC() {
-      return (this.weatherData.main.temp - 273.15).toFixed(1);
-    },
-    feelsLikeC() {
-      return (this.weatherData.main.feels_like - 273.15).toFixed(1);
-    },
-    tempMinC() {
-      return (this.weatherData.main.temp_min - 273.15).toFixed(1);
-    },
-    tempMaxC() {
-      return (this.weatherData.main.temp_max - 273.15).toFixed(1);
-    },
-    formattedDate() {
-      const date = new Date(this.weatherData.dt * 1000);
-      return date.toLocaleDateString("uk-UA");
-    },
-    day() {
-      const date = new Date(this.weatherData.dt * 1000);
+  methods: {
+    getDayOfWeek(timestamp) {
+      const date = new Date(timestamp * 1000);
       const weekday = date
         .toLocaleDateString("en-US", { weekday: "long" })
         .toLowerCase();
       return this.$t(weekday);
     },
-     translatedDescription() {
-      const description = this.weatherData.weather[0].description;
+  },
+  computed: {
+    temperatureC() {
+      return (this.weatherDataDay.main.temp - 273.15).toFixed(1);
+    },
+    feelsLikeC() {
+      return (this.weatherDataDay.main.feels_like - 273.15).toFixed(1);
+    },
+    tempMinC() {
+      return (this.weatherDataDay.main.temp_min - 273.15).toFixed(1);
+    },
+    tempMaxC() {
+      return (this.weatherDataDay.main.temp_max - 273.15).toFixed(1);
+    },
+    formattedDate() {
+      const date = new Date(this.weatherDataDay.dt * 1000);
+      return date.toLocaleDateString("uk-UA");
+    },
+    day() {
+      const date = new Date(this.weatherDataDay.dt * 1000);
+      const weekday = date
+        .toLocaleDateString("en-US", { weekday: "long" })
+        .toLowerCase();
+      return this.$t(weekday);
+    },
+    translatedDescription() {
+      const description = this.weatherDataDay.weather[0].description;
       return this.$t(`weatherDescriptions.${description}`);
+    },
+
+    isDay() {
+      return this.$store.state.cities[this.index]?.regime === "day";
     },
   },
 };
@@ -146,5 +187,51 @@ export default {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+}
+
+.weekly-weather-list {
+  height: 250px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.weekly-weather-item {
+  width: 150px;
+  height: auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  flex-direction: column;
+}
+
+.weekly-weather-day-text {
+  color: #555;
+}
+
+.weekly-temp {
+  font-size: 32px;
+  font-weight: bold;
+  color: #ff6b6b;
+}
+
+.weekly-description {
+  font-size: 20px;
+  color: #555;
 }
 </style>
