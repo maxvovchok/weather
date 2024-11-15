@@ -11,6 +11,7 @@ export default createStore({
         regime: "day",
       },
     ],
+    isLoading: false,
     isFirstCitySelected: false,
   },
   mutations: {
@@ -51,6 +52,13 @@ export default createStore({
       }
       state.isFirstCitySelected = true;
     },
+    setLoading(state, isLoading) {
+      state.isLoading = isLoading;
+    },
   },
-  actions: {},
+  actions: {
+    setLoading({ commit }, isLoading) {
+      commit("setLoading", isLoading);
+    },
+  },
 });

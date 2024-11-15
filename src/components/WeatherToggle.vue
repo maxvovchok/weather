@@ -49,6 +49,7 @@ export default {
   },
   methods: {
     async setWeekView() {
+      this.$store.dispatch("setLoading", true);
       const data = await getCityCoordinatesWeek(
         this.weather.coord.lat,
         this.weather.coord.lon
@@ -57,8 +58,6 @@ export default {
       this.isWeekViewClicked = true;
       this.isDayViewClicked = false;
 
-      console.log("data", this.calculateWeeklyWeather(data.list));
-
       this.weeklyWeather = this.calculateWeeklyWeather(data.list);
 
       this.$store.commit("seWeeklyWeather", {
@@ -66,9 +65,8 @@ export default {
         weeklyWeather: this.weeklyWeather,
       });
 
-      console.log("weeklyWeather", this.weeklyWeather);
-
       this.$store.commit("setRegime", { index: this.index, regime: "week" });
+      this.$store.dispatch("setLoading", false);
     },
 
     async setDayView() {

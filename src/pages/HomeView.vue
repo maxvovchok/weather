@@ -3,7 +3,10 @@
     <div v-for="(city, index) in $store.state.cities" :key="city.id">
       <AutocompleteInput :index="index" />
 
-      <h1 v-if="!city.citySuggestions" class="home-title">
+      <h1
+        v-if="!city.citySuggestions && !$store.state.isLoading"
+        class="home-title"
+      >
         {{ $t("homeTitle") }}
       </h1>
 
@@ -63,6 +66,9 @@ import {
   SelectedBlock,
   WeatherToggle,
 } from "@/components/index.js";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
+
 import {
   getUserLocation,
   getHourlyRate,
@@ -78,9 +84,12 @@ export default {
     RemoveBlock,
     SelectedBlock,
     WeatherToggle,
+    Loading,
   },
 
   async created() {
+    this.$store.dispatch("setLoading", true);
+
     try {
       const userLocation = await getUserLocation();
       if (userLocation) {
@@ -96,13 +105,15 @@ export default {
             city: suggestions.city,
           });
 
-          getHourlyRate(city).then((res) =>
+          await getHourlyRate(city).then((res) =>
             this.$store.commit("setGetHourlyRate", { index, hourlyRate: res })
           );
         }
+        this.$store.dispatch("setLoading", false);
       }
     } catch (error) {
       console.error(error);
+    } finally {
     }
   },
 

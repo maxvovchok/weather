@@ -1,6 +1,6 @@
 <template>
-  <div class="about">
-    <h1 v-if="cities.length === 0" class="about-title">
+  <div class="select">
+    <h1 v-if="cities.length === 0" class="select-title">
       {{ $t("aboutTitle") }}
     </h1>
     <div v-for="(city, index) in cities" :key="city.id">
@@ -15,14 +15,18 @@
         :weatherDataWeek="getWeeklyWeather(index)"
         :index="index"
       />
-      <!-- <TemperatureChart
+
+      <TemperatureChart
         v-if="city.hourlyRate"
         :hourlyRate="city.hourlyRate"
         :weeklyRate="getWeeklyWeather(index)"
         :index="index"
-      /> -->
+      />
 
-      <RemoveBlock @remove="handleRemoveBlock(index)" />
+      <RemoveBlock
+        v-if="cities.length >= 1"
+        @remove="handleRemoveBlock(index)"
+      />
     </div>
   </div>
 </template>
@@ -50,36 +54,47 @@ export default {
   },
 
   created() {
-    this.loadCities();
-    console.log("qwe", this.$store.state.cities);
+    const savedCities = localStorage.getItem("cities");
+    if (savedCities) {
+      this.cities = JSON.parse(savedCities);
+    }
+  },
+
+  watch: {
+    cities: {
+      handler(newCities) {
+        localStorage.setItem("cities", JSON.stringify(newCities));
+      },
+      deep: true,
+    },
   },
 
   methods: {
-    loadCities() {
-      const storedCities = localStorage.getItem("cities");
-      if (storedCities) {
-        this.cities = JSON.parse(storedCities);
-      }
+    addCity(city) {
+      this.cities.push(city);
     },
 
-    handleRemoveBlock(index) {
+    removeCity(index) {
       this.cities.splice(index, 1);
-      localStorage.setItem("cities", JSON.stringify(this.cities));
     },
 
     getWeeklyWeather(index) {
-      return this.$store.state.cities[index]?.weeklyWeather;
+      return this.$store.state.cities[index].weeklyWeather || [];
+    },
+
+    handleRemoveBlock(index) {
+      this.removeCity(index);
     },
   },
 };
 </script>
 
-<style>
-.about {
+<style scoped>
+.select {
   padding: 40px;
 }
 
-.about-title {
+.select-title {
   text-align: center;
 }
 </style>

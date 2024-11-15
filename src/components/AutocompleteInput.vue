@@ -57,6 +57,7 @@ export default {
       }
     },
     selectCity(suggestion) {
+      this.$store.dispatch("setLoading", true);
       this.query = suggestion.fullName;
       this.suggestions = [];
       this.ignoreWatch = true;
@@ -66,12 +67,20 @@ export default {
         city: suggestion.city,
       });
 
-      getHourlyRate(this.query).then((res) =>
-        this.$store.commit("setGetHourlyRate", {
-          index: this.index,
-          hourlyRate: res,
+      getHourlyRate(this.query)
+        .then((res) => {
+          this.$store.commit("setGetHourlyRate", {
+            index: this.index,
+            hourlyRate: res,
+          });
         })
-      );
+        .catch((error) => {
+          console.error("Failed to fetch hourly rate:", error);
+        })
+        .finally(() => {
+          this.$store.dispatch("setLoading", false);
+        });
+
       this.$store.commit("setRegime", { index: this.index, regime: "day" });
     },
   },

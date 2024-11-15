@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <loading v-model:active="$store.state.isLoading" />
     <header class="header">
       <nav class="header-nav">
         <router-link class="nav-menu-link" to="/">{{ $t("home") }}</router-link>
@@ -16,8 +17,11 @@
 
 <script>
 import { SwitchLanguages } from "@/components/index.js";
+
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
 export default {
-  components: { SwitchLanguages },
+  components: { SwitchLanguages, Loading },
 };
 </script>
 

@@ -29,6 +29,7 @@ export default {
       required: true,
     },
   },
+
   setup(props) {
     const myChart = ref(null);
     const chart = ref(null);
