@@ -144,10 +144,6 @@ export default {
   gap: 65px;
 }
 
-.weather-main-item {
-  min-width: 300px;
-}
-
 .weather-card-title {
   font-size: 22px;
   margin-bottom: 15px;
@@ -160,6 +156,7 @@ export default {
   display: flex;
   justify-content: space-between;
   gap: 30px;
+  width: 300px;
   font-size: 14px;
   color: #555;
   border-bottom: 1px solid #ddd;
@@ -190,7 +187,7 @@ export default {
 }
 
 .weekly-weather-list {
-  height: 250px;
+  height: auto;
   padding: 20px;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
@@ -233,5 +230,20 @@ export default {
 .weekly-description {
   font-size: 20px;
   color: #555;
+}
+
+@media screen and (max-width: 768px) {
+  .weather-card-list {
+    padding: 20px;
+    flex-direction: column;
+    gap: 35px;
+  }
+  .weather-info {
+    width: auto;
+  }
+
+  .weather-details-item {
+    justify-content: center;
+  }
 }
 </style>

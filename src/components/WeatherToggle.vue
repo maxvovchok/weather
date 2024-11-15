@@ -113,10 +113,20 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .weather-toggle-list {
   padding: 0;
   display: flex;
   gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .weather-toggle-list {
+    justify-content: space-between;
+  }
+
+  .weather-toggle-list button {
+    width: 70px;
+  }
 }
 </style>

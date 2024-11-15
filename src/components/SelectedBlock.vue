@@ -94,4 +94,17 @@ export default {
 .selected-btn {
   padding-right: 40px;
 }
+
+@media screen and (max-width: 768px) {
+  .selected-btn {
+    padding-right: 0px;
+  }
+  .selected-btn button {
+    width: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+  }
+}
 </style>

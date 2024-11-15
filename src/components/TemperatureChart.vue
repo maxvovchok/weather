@@ -1,10 +1,10 @@
 <template>
   <div class="temperature-chart" v-if="isDay">
-    <canvas ref="myChart"></canvas>
+    <canvas ref="myChart" class="chart"></canvas>
   </div>
 
   <div class="temperature-chart" v-else>
-    <canvas ref="myChart"></canvas>
+    <canvas ref="myChart" class="chart"></canvas>
   </div>
 </template>
 
@@ -12,6 +12,7 @@
 import { ref, watch, onMounted, onBeforeUnmount, computed } from "vue";
 import { useStore } from "vuex";
 import Chart from "chart.js/auto";
+import { useI18n } from "vue-i18n";
 
 export default {
   name: "TemperatureChart",
@@ -35,6 +36,7 @@ export default {
     const chart = ref(null);
     const listtime = ref([]);
     const labels = ref([]);
+    const { t } = useI18n();
 
     const store = useStore();
 
@@ -51,7 +53,7 @@ export default {
             labels: labels.value,
             datasets: [
               {
-                label: `Temperature (°C)`,
+                label: `${t("temperature")} (°C)`,
                 data: listtime.value,
                 backgroundColor: "rgba(75, 192, 192, 0.2)",
                 borderColor: "rgba(75, 192, 192, 1)",
@@ -82,7 +84,7 @@ export default {
             labels: labels.value,
             datasets: [
               {
-                label: `Temperature (°C)`,
+                label: `${t("temperature")} (°C)`,
                 data: listtime.value,
                 backgroundColor: "rgba(75, 192, 192, 0.2)",
                 borderColor: "rgba(75, 192, 192, 1)",
@@ -142,7 +144,7 @@ export default {
     const filterWeeklyData = () => {
       const days = props.weeklyRate.map((item) => {
         const date = new Date(item.dayWeek * 1000);
-        return date.toLocaleDateString("uk-UA", { weekday: "long" });
+        return date.toLocaleDateString("en-UA", { weekday: "long" });
       });
 
       const temps = props.weeklyRate.map((item) => item.temp);
@@ -198,8 +200,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .temperature-chart {
   margin-bottom: 20px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.temperature-chart canvas {
+  display: inline !important;
 }
 </style>

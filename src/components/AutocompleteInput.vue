@@ -112,4 +112,10 @@ export default {
 .city-item:hover {
   background-color: #f0f0f0;
 }
+
+@media screen and (max-width: 768px) {
+  .autocomplete-input {
+    width: 300px;
+  }
+}
 </style>

@@ -7,8 +7,10 @@ export default createStore({
         id: 1,
         citySuggestions: null,
         hourlyRate: null,
-        weeklyWeather: null,
+        weeklyWeather: [],
         regime: "day",
+        dayData: [],
+        nightData: [],
       },
     ],
     isLoading: false,
@@ -54,6 +56,16 @@ export default createStore({
     },
     setLoading(state, isLoading) {
       state.isLoading = isLoading;
+    },
+
+    setDayNightData(state, { index, regime, data }) {
+      if (state.cities[index]) {
+        if (regime === "day") {
+          state.cities[index].dayData = data;
+        } else if (regime === "night") {
+          state.cities[index].nightData = data;
+        }
+      }
     },
   },
   actions: {

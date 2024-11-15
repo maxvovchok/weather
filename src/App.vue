@@ -41,6 +41,7 @@ p {
 li {
   list-style: none;
 }
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -67,5 +68,20 @@ li {
 
 .nav-menu-link:hover {
   color: rgb(79, 79, 255);
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0px 15px;
+  }
+
+  .header-nav {
+    gap: 20px;
+  }
+
+  .nav-menu-link {
+    font-size: 16px;
+    padding: 8px 0;
+  }
 }
 </style>

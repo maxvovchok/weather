@@ -113,7 +113,6 @@ export default {
       }
     } catch (error) {
       console.error(error);
-    } finally {
     }
   },
 
@@ -142,5 +141,21 @@ export default {
 .btn-list {
   display: flex;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 768px) {
+  .home {
+    padding: 30px 0px;
+  }
+
+  .home-title {
+    margin-top: 120px;
+    font-size: 22px;
+  }
+
+  .btn-list {
+    width: auto;
+    padding: 0;
+  }
 }
 </style>

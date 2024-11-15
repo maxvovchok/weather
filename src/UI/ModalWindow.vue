@@ -26,13 +26,14 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   display: flex;
+  padding: 20px;
 }
 
 .modal-content {
   margin: auto;
   background: white;
   border-radius: 12px;
-  min-width: 300px;
+  min-width: 250px;
   min-height: 100px;
   padding: 20px;
   text-align: center;

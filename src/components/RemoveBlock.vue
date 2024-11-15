@@ -84,5 +84,6 @@ export default {
   display: flex;
   justify-content: flex-end;
   padding-right: 10px;
+  margin-bottom: 20px;
 }
 </style>
