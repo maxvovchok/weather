@@ -43,9 +43,17 @@ export default {
     return {
       weeklyTemperatures: [],
       weeklyWeather: [],
-      isDayViewClicked: true,
-      isWeekViewClicked: false,
+      isDayViewClicked: null,
+      isWeekViewClicked: null,
     };
+  },
+  created() {
+    const regime = this.$store.state.cities[this.index].regime;
+    if (regime === "day") {
+      this.isDayViewClicked = true;
+    } else {
+      this.isWeekViewClicked = true;
+    }
   },
   methods: {
     async setWeekView() {
